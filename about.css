@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.tab {
+    height: 20px;
+}
+table
+{
+	width:100%px;
+}
+th, td{
+	border: 1px solid black;
+	width: 30px;
+}

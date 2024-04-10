@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(https://i.pinimg.com/originals/52/4b/cd/524bcdcf7c5243cbd2139afd558b8606.gif );
+            background-size: cover;
+            background-repeat: no-repeat; 
+            background-position: center; 
+            background-attachment: fixed; 
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 800px; /* Fixed width */
+            height: 400px; /* Fixed height */
+            margin: auto;
+            backdrop-filter: blur(5px); /* Apply blur effect */
+            background-color: rgba(255, 255, 255, 0.5); /* Transparent background */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+        }
+        .task-list,
+        .checked-tasks {
+            width: 48%; /* Adjusted to leave space between the lists */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left; /* Align text content to the left */
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="task-list">
+            <h2>To-Do List</h2>
+            <input type="text" id="taskInput" placeholder="Enter task">
+            <button onclick="addTask()">Add Task</button>
+            <ul id="taskList">
+                <!-- Tasks will be dynamically added here -->
+            </ul>
+        </div>
+
+        <div class="checked-tasks">
+            <h2>Checked Tasks</h2>
+            <ul id="checkedTaskList">
+                <!-- Checked tasks will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById("taskInput");
+            var taskText = taskInput.value.trim();
+
+            if (taskText !== "") {
+                var taskList = document.getElementById("taskList");
+                var newTask = document.createElement("li");
+
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.onclick = function() {
+                    moveCheckedTask(newTask);
+                };
+
+                var taskLabel = document.createElement("span");
+                taskLabel.textContent = taskText;
+
+                newTask.appendChild(checkbox);
+                newTask.appendChild(taskLabel);
+                taskList.appendChild(newTask);
+
+                taskInput.value = "";
+            } else {
+                alert("Please enter a task!");
+            }
+        }
+
+        function moveCheckedTask(taskElement) {
+            var checkedTaskList = document.getElementById("checkedTaskList");
+            var isChecked = taskElement.querySelector("input[type='checkbox']").checked;
+
+            if (isChecked) {
+                taskElement.removeChild(taskElement.querySelector("input[type='checkbox']"));
+                checkedTaskList.appendChild(taskElement);
+            } else {
+                var taskLabel = taskElement.querySelector("span");
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.onclick = function() {
+                    moveCheckedTask(taskElement);
+                };
+
+                taskElement.insertBefore(checkbox, taskLabel);
+                checkedTaskList.removeChild(taskElement);
+            }
+        }
+    </script>
+</body>
+</html>

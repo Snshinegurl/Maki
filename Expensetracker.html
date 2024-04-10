@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url(https://i.pinimg.com/originals/52/4b/cd/524bcdcf7c5243cbd2139afd558b8606.gif);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        select, input[type="number"], button {
+            margin: 10px;
+            padding: 5px;
+            width: calc(100% - 20px); /* Subtracting margin from the width */
+            height: 40px; /* Set the height */
+            box-sizing: border-box; /* Include padding and border in the width and height */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Unit Converter</h1>
+        <select id="inputUnit">
+            <option value="meter">Meter (m)</option>
+            <option value="kilometer">Kilometer (km)</option>
+            <option value="mile">Mile (mi)</option>
+            <option value="inch">Inch (in)</option>
+        </select>
+        <input type="number" id="inputValue" placeholder="Enter value to convert">
+        <select id="outputUnit">
+            <option value="meter">Meter (m)</option>
+            <option value="kilometer">Kilometer (km)</option>
+            <option value="mile">Mile (mi)</option>
+            <option value="inch">Inch (in)</option>
+        </select>
+        <button onclick="convert()">Convert</button>
+        <p id="convertedValue"></p>
+    </div>
+
+    <script>
+        function convert() {
+            var inputUnit = document.getElementById("inputUnit").value;
+            var inputValue = parseFloat(document.getElementById("inputValue").value);
+            var outputUnit = document.getElementById("outputUnit").value;
+            var result;
+
+            // Validate input value
+            if (isNaN(inputValue)) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            // Perform conversion
+            switch (inputUnit) {
+                case "meter":
+                    result = convertMeter(inputValue, outputUnit);
+                    break;
+                case "kilometer":
+                    result = convertKilometer(inputValue, outputUnit);
+                    break;
+                case "mile":
+                    result = convertMile(inputValue, outputUnit);
+                    break;
+                case "inch":
+                    result = convertInch(inputValue, outputUnit);
+                    break;
+            }
+
+            // Display result
+            document.getElementById("convertedValue").innerHTML = result.toFixed(2) + " " + outputUnit;
+        }
+
+        function convertMeter(inputValue, outputUnit) {
+            switch (outputUnit) {
+                case "meter":
+                    return inputValue;
+                case "kilometer":
+                    return inputValue / 1000;
+                case "mile":
+                    return inputValue * 0.000621371;
+                case "inch":
+                    return inputValue * 39.3701;
+            }
+        }
+
+        function convertKilometer(inputValue, outputUnit) {
+            switch (outputUnit) {
+                case "meter":
+                    return inputValue * 1000;
+                case "kilometer":
+                    return inputValue;
+                case "mile":
+                    return inputValue * 0.621371;
+                case "inch":
+                    return inputValue * 39370.1;
+            }
+        }
+
+        function convertMile(inputValue, outputUnit) {
+            switch (outputUnit) {
+                case "meter":
+                    return inputValue / 0.000621371;
+                case "kilometer":
+                    return inputValue / 0.621371;
+                case "mile":
+                    return inputValue;
+                case "inch":
+                    return inputValue * 63360;
+            }
+        }
+
+        function convertInch(inputValue, outputUnit) {
+            switch (outputUnit) {
+                case "meter":
+                    return inputValue * 0.0254;
+                case "kilometer":
+                    return inputValue * 0.0000254;
+                case "mile":
+                    return inputValue * 0.000015783;
+                case "inch":
+                    return inputValue;
+            }
+        }
+    </script>
+</body>
+</html>
